@@ -8,6 +8,31 @@ def calculate_rectangle_area():
     
     # Display the result
     print(f"The area of the rectangle is {area}")
+def calculate_volume_sphere():
+    # Get user input for radius
+    radius = float(input("Enter the radius of the sphere: "))
+    
+    # Calculate the volume
+    volume = (4/3) * 3.14159 * (radius ** 3)
+    
+    # Display the result
+    print(f"The volume of the sphere is {volume}") 
+
+
+def choose_shape():
+    print("Choose a shape to calculate:")
+    print("1. Rectangle Area")
+    print("2. Sphere Volume")
+    
+    choice = input("Enter 1 or 2: ")
+    
+    if choice == '1':
+        calculate_rectangle_area()
+    elif choice == '2':
+        calculate_volume_sphere()
+    else:
+        print("Invalid choice. Please select 1 or 2.")
+
 
 # Call the function
-calculate_rectangle_area()
+choose_shape()
