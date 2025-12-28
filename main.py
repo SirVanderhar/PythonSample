@@ -1,4 +1,4 @@
-import functions.py
+from functions import *
 
 # Call the function
 calculate_rectangle_area()
