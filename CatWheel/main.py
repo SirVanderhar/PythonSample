@@ -1,28 +1,16 @@
 import random
-from flask import Flask, render_template
 import time
+from datetime import datetime
 from calculations import *
 current_fps = 0.0
 total_distance = 0.0 
 longest_run = 0.0
 lastTime = 0.0 
 
-app = Flask(__name__)
-
-@app.route('/')
-def index():
-    # Sample data - replace with actual values
-
-    return render_template('index.html',
-                         speed=current_fps,
-                         distance=total_distance,
-                         duration=longest_run)
-
-#if __name__ == '__main__':
-#   app.run(debug=True)
-
-
+#function to be called when a sensor is tripped
+#updates current fps, total distance, and longest run
 def sensorTripped():
+    #call global variables to interact with them outside of the function
     global current_fps 
     global total_distance
     global longest_run
@@ -31,6 +19,8 @@ def sensorTripped():
     if lastTime != 0.0:
         timeDiff = currentTime - lastTime
         if timeDiff > 5: #assume the cat has started a new run if more than 5 seconds have passed
+            #call function to save the last run data into a text file for later analysis
+            saveData(lastTime)
             longest_run = max(longest_run, total_distance)
             total_distance = 0.0
         else:
@@ -39,7 +29,16 @@ def sensorTripped():
     lastTime = currentTime
     print(f"Current FPS: {current_fps}, Total Distance: {total_distance}, Longest Run: {longest_run}")
 
+#function to save data to a text file
+#timestamp the file with the current date and time
+#append the last run distance to the file
+def saveData(savetime: float):
+    timestamp = datetime.fromtimestamp(savetime).strftime('%Y%m%d_%H%M%S')
+    #timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+    with open(f"catwheel_data_{timestamp}.txt", "a") as f:
+        f.write(f"Last Run total distance:{total_distance}\n")
 
+def saveHTML()
 
 
 
